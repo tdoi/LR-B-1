@@ -4,32 +4,33 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 public class Main {
 
-  public static void main(String[] args) {
-    String file = "docs/test.csv";
-    try {
-      FileReader fileReader = new FileReader(file);
-      BufferedReader bufferedReader = new BufferedReader(fileReader);
+    public static void main(String[] args) {
+        String file = "docs/test.csv";
+        try {
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-      LinearRegressionCreater linearRegressionCreater = new LinearRegressionCreater(bufferedReader);
-      List<LinearRegression> linearRegressions = linearRegressionCreater.create();
+            TableGenerator tableGenerator = new TableGenerator();
+            Table table = tableGenerator.make(bufferedReader);
 
-      ResultAnalayzer resultAnalayzer = new ResultAnalayzer();
-      Map<Integer, List<String>> table = linearRegressionCreater.getTable();
-      List<Integer> results = resultAnalayzer.result(table, linearRegressions);
+            LinearRegressionCreater linearRegressionCreater = new LinearRegressionCreater(table);
+            List<LinearRegression> linearRegressions = linearRegressionCreater.create();
 
-      System.out.println("最も正確に判断できるものは");
-      List<String> list = table.get(0);
-      for (Integer result : results) {
-        System.out.println(list.get(result + 1));
-      }
-      bufferedReader.close();
+            ResultAnalayzer resultAnalayzer = new ResultAnalayzer();
+            List<Integer> results = resultAnalayzer.result(table, linearRegressions);
 
-    } catch (IOException e) {
-      e.printStackTrace();
+            System.out.println("最も正確に判断できるものは");
+            List<String> row = table.getRow(0);
+            for (Integer result : results) {
+                System.out.println(row.get(result + 1));
+            }
+            bufferedReader.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-  }
 }

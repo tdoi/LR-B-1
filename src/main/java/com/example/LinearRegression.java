@@ -13,7 +13,8 @@ public class LinearRegression {
 
   private void setRegressionData(List<String> column, List<String> codeColumn) {
     this.simpleRegression = new SimpleRegression();
-    for (int i = 0; i < column.size(); i++) {
+    int rowNumber = column.size();
+    for (int i = 1; i < rowNumber; i++) {
       simpleRegression
           .addData(Integer.parseInt(column.get(i)), Integer.parseInt(codeColumn.get(i)));
     }
@@ -27,7 +28,7 @@ public class LinearRegression {
     return simpleRegression.getIntercept();
   }
 
-  public double colcu(int value) {
+  public double calculation(int value) {
     return getSlope() * value + getInterCept();
   }
 }
