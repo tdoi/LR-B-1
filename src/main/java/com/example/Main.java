@@ -16,11 +16,8 @@ public class Main {
             TableGenerator tableGenerator = new TableGenerator();
             Table table = tableGenerator.make(bufferedReader);
 
-            LinearRegressionCreater linearRegressionCreater = new LinearRegressionCreater(table);
-            List<LinearRegression> linearRegressions = linearRegressionCreater.create();
-
             ResultAnalayzer resultAnalayzer = new ResultAnalayzer();
-            List<Integer> results = resultAnalayzer.result(table, linearRegressions);
+            List<Integer> results = resultAnalayzer.result(table);
 
             System.out.println("最も正確に判断できるものは");
             List<String> row = table.getRow(0);
